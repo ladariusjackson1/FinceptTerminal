@@ -97,7 +97,6 @@
 #include "ui/navigation/ToolBar.h"
 #include "ui/pushpins/PushpinBar.h"
 #include "ui/theme/Theme.h"
-#include "ui/widgets/EnterprisePromo.h"
 #include "ui/workspace/LayoutOpenDialog.h"
 #include "ui/workspace/LayoutSaveAsDialog.h"
 
@@ -821,9 +820,6 @@ WindowFrame::WindowFrame(int window_id, QWidget* parent, const WindowId& adopted
         stack_->setCurrentIndex(0);
         auth_stack_->setCurrentIndex(3); // PricingScreen
     });
-
-    // Toolbar UPGRADE → Enterprise (the private edition) promo dialog.
-    connect(toolbar, &ui::ToolBar::upgrade_clicked, this, [this]() { ui::UpgradeDialog::show_now(this); });
 
     // Auth state
     connect(&auth::AuthManager::instance(), &auth::AuthManager::auth_state_changed, this,

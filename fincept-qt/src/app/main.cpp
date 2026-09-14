@@ -108,7 +108,6 @@
 #include "ui/tables/LiveTableSelftest.h"
 #include "ui/theme/Theme.h"
 #include "ui/theme/ThemeManager.h"
-#include "ui/widgets/EnterprisePromo.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -1196,14 +1195,6 @@ int main(int argc, char* argv[]) {
                     auto* window = new fincept::WindowFrame(primary_id);
                     window->setAttribute(Qt::WA_DeleteOnClose);
                     window->show();
-
-                    // Enterprise promo, once the frame has painted. Self-
-                    // suppresses when the user ticked "Don't show this again"
-                    // and when the platform has no window system.
-                    QPointer<fincept::WindowFrame> promo_target = window;
-                    QTimer::singleShot(1200, &app, [promo_target]() {
-                        fincept::ui::UpgradeDialog::maybe_show_at_startup(promo_target.data());
-                    });
                 }
 
                 // Wire new-window handler + Launchpad surface now that the
@@ -1264,15 +1255,6 @@ int main(int argc, char* argv[]) {
         // runtime (DLL, plugin, or data file like QtWebEngineProcess.exe) shows
         // up as a hard process abort or a non-constructing screen here — exactly
         // the class of failure the static dependency gate cannot detect.
-        // Enterprise promo, once the frame has painted. Never in --smoke-test:
-        // that run walks every screen headlessly and a modal would block it.
-        if (!smoke_mode) {
-            QPointer<fincept::WindowFrame> promo_target = primary;
-            QTimer::singleShot(1200, &app, [promo_target]() {
-                fincept::ui::UpgradeDialog::maybe_show_at_startup(promo_target.data());
-            });
-        }
-
         if (smoke_mode) {
             QPointer<fincept::WindowFrame> w = primary;
             QTimer::singleShot(2500, &app, [w]() {

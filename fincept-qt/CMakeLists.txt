@@ -1489,7 +1489,6 @@ set(UI_SOURCES
     src/ui/widgets/ConfettiOverlay.cpp
     src/ui/widgets/SpeedSparkline.cpp
     src/ui/widgets/LanguageSwitcher.cpp
-    src/ui/widgets/EnterprisePromo.cpp
     src/ui/tables/DataTable.cpp
     # Selftest for the header-only LiveTableModel/LiveTableDelegate. Also the
     # only TU that includes them, so it is their compile check — a header with
